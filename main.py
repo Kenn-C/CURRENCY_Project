@@ -273,7 +273,7 @@ def update_infinite_graph(selected_currency, n_intervals):
         )
 
     try:
-        # Fetch the base rate from the API
+        # Fetch rate from  API
         response = requests.get(f"{API_URL}/USD")
         data = response.json()
         rates = data.get('rates', {})
@@ -288,14 +288,13 @@ def update_infinite_graph(selected_currency, n_intervals):
         # Simulate live fluctuations
         fluctuated_rate = base_rate + random.uniform(-0.05, 0.05)
 
-        # Update historical rates for the selected currency
+        # Update historical
         now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         historical_rates[selected_currency].append({'time': now, 'rate': fluctuated_rate})
 
-        # Create DataFrame for plotting
+        # Create DataFrame
         df = pd.DataFrame(historical_rates[selected_currency])
 
-        # Generate the infinite graph
         fig = px.line(
             df,
             x='time',
@@ -304,7 +303,6 @@ def update_infinite_graph(selected_currency, n_intervals):
             labels={'time': 'Time', 'rate': 'Rate'},
         )
 
-        # Update layout aesthetics
         fig.update_layout(
             paper_bgcolor='#1B263B',
             plot_bgcolor='#1B263B',
